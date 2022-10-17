@@ -44,3 +44,35 @@ class EightPuzzle:
 
     def Goal_test(self, state):
         return (state == self.goal)
+
+class Node:
+    def __init__(self, state, parent=None, action=None, cost=0):
+        self.state = state
+        self.parent = parent
+        self.action = action
+        self.cost = cost
+        if (parent):
+            self.depth = parent.depth
+        else:
+            self.depth = 0
+
+    def Child_node(self, action, problem):
+        return Node(problem.Result(self.state,action), self, action, self.cost)
+
+    def Expand(self, problem):
+        """
+        Get all possible state of the ::problem
+        """
+        List_successor = []
+        possible_action = problem.Action(self.state)
+        for action in possible_action:
+            List_successor.append(self.Child_node(action,problem))
+        return List_successor
+
+    def Solution(self):
+        node, solution = self, []
+        while (node.parent):
+            solution.append(node.action)
+            node = node.parent
+        return list(reversed(solution))
+
