@@ -1,5 +1,6 @@
 import sys
 from random import choice
+from collections import deque
 
 class EightPuzzle:
     def __init__(self, initial_state=[], goal_state=[]):
@@ -75,4 +76,25 @@ class Node:
             solution.append(node.action)
             node = node.parent
         return list(reversed(solution))
+
+class BFS:
+    def __init__(self, problem):
+        self.solution = self.breadth_first_graph_search(problem).Solution()
+
+    def breadth_first_graph_search(self,problem):
+        node = Node(problem.initial)
+        if problem.Goal_test(node.state):
+            return node
+        frontier = deque([node])
+        explored = set()
+        while frontier:
+            node = frontier.popleft()
+            explored.add(node.state)
+            children = node.Expand(problem)
+            for child in children:
+                if child.state not in explored and child not in frontier:
+                    if problem.Goal_test(child.state):
+                        return child
+                    frontier.append(child)
+        return None
 
