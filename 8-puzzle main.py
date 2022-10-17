@@ -1,6 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Eight_puzzle_algo import *
 
 class Ui_MainWindow(object):
+
+    ListButton = []
+    def __init__(self, problem, solving):
+        self.problem = problem
+        self.solution = tuple(solving.solution)
+        self.state  = problem.initial
+        self.action = list(solving.solution)
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setStyleSheet("background-color: #EDEFEC;")
@@ -142,6 +151,17 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.ListButton.append(self.btn0)
+        self.ListButton.append(self.btn0_2)
+        self.ListButton.append(self.btn0_3)
+        self.ListButton.append(self.btn0_4)
+        self.ListButton.append(self.btn0_5)
+        self.ListButton.append(self.btn0_6)
+        self.ListButton.append(self.btn0_7)
+        self.ListButton.append(self.btn0_8)
+
+        self.pushButton_11.clicked.connect(self.Reset)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "8-puzzle Game "))
@@ -156,6 +176,19 @@ class Ui_MainWindow(object):
         self.btn0_8.setText(_translate("MainWindow", "8"))
         self.pushButton_11.setText(_translate("MainWindow", "RESET"))
         self.pushButton_12.setText(_translate("MainWindow", "SOLVE"))
+
+    def Reset(self):
+        self.state = self.problem.initial
+        self.action = list(self.solution)
+        print(self.solution)
+        for i in range(0,9):
+            if (self.problem.initial[i]!=0):
+                self.ListButton[i].setText(self.problem.initial[i].__str__())
+            else:
+                self.ListButton[i].setText("")
+        if (self.action):
+            self.state = self.problem.Result(self.state,self.action[0])
+            self.action.remove(self.action[0])
 
 
 if __name__ == "__main__":
