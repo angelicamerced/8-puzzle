@@ -24,7 +24,6 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
 
-        #tiles 1-8
         self.btn0.setFont(font)
         self.btn0.setObjectName("btn0")
         self.btn0.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
@@ -159,8 +158,10 @@ class Ui_MainWindow(object):
         self.ListButton.append(self.btn0_6)
         self.ListButton.append(self.btn0_7)
         self.ListButton.append(self.btn0_8)
+        self.ListButton.append(self.btn0_9)
 
         self.pushButton_11.clicked.connect(self.Reset)
+        self.pushButton_12.clicked.connect(self.Solve)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -190,6 +191,16 @@ class Ui_MainWindow(object):
             self.state = self.problem.Result(self.state,self.action[0])
             self.action.remove(self.action[0])
 
+    def Solve(self):
+        for i in range(0,9):
+            if (self.state[i]!=0):
+                self.ListButton[i].setText(self.state[i].__str__())
+            else:
+                self.ListButton[i].setText("")
+        if (self.action):
+            self.state = self.problem.Result(self.state,self.action[0])
+            self.action.remove(self.action[0])
+
 
 if __name__ == "__main__":
     import sys
@@ -197,5 +208,6 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+    ui.Reset()
     MainWindow.show()
     sys.exit(app.exec_())
