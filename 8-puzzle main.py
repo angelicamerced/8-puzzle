@@ -162,6 +162,7 @@ class Ui_MainWindow(object):
 
         self.pushButton_11.clicked.connect(self.Reset)
         self.pushButton_12.clicked.connect(self.Solve)
+        self.pushButton_12.clicked.connect(self.New_game)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -201,6 +202,15 @@ class Ui_MainWindow(object):
             self.state = self.problem.Result(self.state,self.action[0])
             self.action.remove(self.action[0])
 
+    def New_game(self):
+        shuffled_state = EightPuzzle().shuffle(self.state)
+        problem = EightPuzzle(initial_state=shuffled_state, goal_state=(1, 2, 3, 4, 5, 6, 7, 8, 0))
+        bfs_solve = BFS(problem)
+        self.problem = problem
+        self.solution = tuple(bfs_solve.solution)
+        self.state = problem.initial
+        self.action = list(bfs_solve.solution)
+        self.Reset()
 
 if __name__ == "__main__":
     import sys
