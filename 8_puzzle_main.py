@@ -4,7 +4,7 @@ import pygame_gui
 import time
 import global_colors
 
-SCREEN_SIZE = (800, 600)
+SCREEN_SIZE = (850, 600)
 pygame.init()
 BASICFONT = pygame.font.Font('Roboto-Medium.ttf',50)
 pygame.display.set_caption('8 Puzzle Game')
@@ -15,17 +15,7 @@ manager = pygame_gui.UIManager(SCREEN_SIZE, 'theme.json')
 pygame_gui.core.IWindowInterface.set_display_title(self=window_surface,new_title="8-Puzzle")
 
 
-def display_elements():
-    #Elements
-    '''
-    pygame_gui.elements.ui_label.UILabel(manager=manager,
-                                        text="8-Puzzle Game",
-                                        relative_rect=pygame.Rect((250, 5), (300, 50)),
-                                        object_id="#title_box"
-                                        )
-    '''
 
-display_elements()
 #solve button
 solve_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((375, 100), (90, 30)),
                                              text='Solve',
@@ -81,6 +71,9 @@ puzzle.initialize()
 algorithm = "BFS"
 fstate="1,2,3,4,5,6,7,8,0"
 is_running = True
+show_confirmaton = False
+tempo = ''
+info = ''
 
 while is_running:
     time_delta = clock.tick(60)/1000.0
@@ -91,28 +84,30 @@ while is_running:
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == shuffle_button:
-                    puzzle.randomBlocks()
+                    random_blocks = puzzle.randomBlocks()
                 elif event.ui_element == solve_button:
-
                     if algorithm == "BFS":
-                        moves = puzzle.bfs()
-                        tempo = "{temp: .5f} seconds".format(temp = puzzle.lastSolveTime)
-                        report_msg = '<b>Visited nodes:</b> '+str(puzzle.cost)+'        <b>Time:</b>'+tempo+ '        <b>Resolution:</b> '+str(len(moves))+' steps'
-                        confirmation_win = pygame_gui.windows.ui_confirmation_dialog.UIConfirmationDialog(rect = pygame.Rect((570, 300), (40, 50)),
+                        try:
+                            comp_time, moves = puzzle.bfs(random_blocks)
+                            print('Solution found!')
+                        except NameError:
+                            comp_time, moves = 0, []
+                        tempo = "{temp: .3f} seconds".format(temp = comp_time)
+                        info = '<b>Visited nodes:</b>'+str(puzzle.cost)+'\n<b>Time:</b>'+tempo+ '\n<b>No. of Steps:</b> '+str(len(moves))
+                        confirmation_win = pygame_gui.windows.ui_confirmation_dialog.UIConfirmationDialog(rect = pygame.Rect((570, 300), (100, 40)),
                                                                                                 manager = manager,
-                                                                                                action_long_desc = report_msg,
+                                                                                                action_long_desc = info,
                                                                                                 window_title =algorithm.split(" ")[0],
-                                                                                                object_id="#bfs",
                                                                                                 )
                         solveAnimation(moves)
 
                     elif algorithm == "A*":
                         moves = puzzle.a_star()
-                        tempo = "{temp: .5f} seconds".format(temp = puzzle.lastSolveTime)
-                        report_msg = '<b>Visited nodes:</b> '+str(puzzle.cost)+'        <b>Time:</b>'+tempo+ '        <b>Resolution:</b> '+str(len(moves))+' steps'
+                        tempo = "{temp: .3f} seconds".format(temp = puzzle.lastSolveTime)
+                        info = '<b>Visited nodes:</b> '+str(puzzle.cost)+'\n<b>Time:</b>'+tempo+ '\n<b>No. of Steps:</b> '+str(len(moves))
                         confirmation_win = pygame_gui.windows.ui_confirmation_dialog.UIConfirmationDialog(rect = pygame.Rect((570, 300), (80, 60)),
                                                                                                 manager = manager,
-                                                                                                action_long_desc = report_msg,
+                                                                                                action_long_desc = info,
                                                                                                 window_title =algorithm.split(" ")[0],
                                                                                                 )
                         solveAnimation(moves)
