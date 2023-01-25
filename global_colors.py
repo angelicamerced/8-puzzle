@@ -1,7 +1,7 @@
 global BLACK
 global WHITE
 global GRAYBG
-global TIFFANY_BLUE #75E6DA
+global TIFFANY_BLUE #BFD7ED
 global BLUE_GROTTO #60A3D9
 global ROYAL_BLUE #0074B7
 global NAVY_BLUE #003B73

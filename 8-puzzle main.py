@@ -1,226 +1,129 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from Eight_puzzle_algo import *
+from puzzle_algo import Algo
+import pygame
+import pygame_gui
+import time
+import global_colors
 
-class Ui_MainWindow(object):
+SCREEN_SIZE = (800, 600)
+pygame.init()
+BASICFONT = pygame.font.Font('Roboto-Medium.ttf',50)
+pygame.display.set_caption('8 Puzzle Game')
+window_surface = pygame.display.set_mode(SCREEN_SIZE)
+background = pygame.Surface(SCREEN_SIZE)
+background.fill(pygame.Color(global_colors.WHITE))
+manager = pygame_gui.UIManager(SCREEN_SIZE, 'theme.json')
+pygame_gui.core.IWindowInterface.set_display_title(self=window_surface,new_title="8-Puzzle")
 
-    ListButton = []
-    def __init__(self, problem, solving):
-        self.problem = problem
-        self.solution = tuple(solving.solution)
-        self.state  = problem.initial
-        self.action = list(solving.solution)
 
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.setStyleSheet("background-color: #EDEFEC;")
-        MainWindow.resize(400,480)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.btn0 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0.setGeometry(QtCore.QRect(30, 60, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
+def display_elements():
+    #Elements
+    '''
+    pygame_gui.elements.ui_label.UILabel(manager=manager,
+                                        text="8-Puzzle Game",
+                                        relative_rect=pygame.Rect((250, 5), (300, 50)),
+                                        object_id="#title_box"
+                                        )
+    '''
 
-        self.btn0.setFont(font)
-        self.btn0.setObjectName("btn0")
-        self.btn0.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.pushButton_10 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_10.setGeometry(QtCore.QRect(30, 20, 101, 31))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.pushButton_10.setFont(font)
-        self.pushButton_10.setObjectName("newgame_btn")
-        self.pushButton_10.setStyleSheet("background-color: #36E303; color: black;")
-        self.btn0_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0_2.setGeometry(QtCore.QRect(140, 60, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btn0_2.setFont(font)
-        self.btn0_2.setObjectName("btn0_2")
-        self.btn0_2.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.btn0_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0_3.setGeometry(QtCore.QRect(250, 60, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btn0_3.setFont(font)
-        self.btn0_3.setObjectName("btn0_3")
-        self.btn0_3.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.btn0_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0_4.setGeometry(QtCore.QRect(30, 170, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btn0_4.setFont(font)
-        self.btn0_4.setObjectName("btn0_4")
-        self.btn0_4.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.btn0_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0_5.setGeometry(QtCore.QRect(140, 170, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btn0_5.setFont(font)
-        self.btn0_5.setObjectName("btn0_5")
-        self.btn0_5.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.btn0_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0_6.setGeometry(QtCore.QRect(250, 170, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btn0_6.setFont(font)
-        self.btn0_6.setObjectName("btn0_6")
-        self.btn0_6.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.btn0_7 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0_7.setGeometry(QtCore.QRect(30, 280, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btn0_7.setFont(font)
-        self.btn0_7.setObjectName("btn0_7")
-        self.btn0_7.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.btn0_8 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0_8.setGeometry(QtCore.QRect(140, 280, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btn0_8.setFont(font)
-        self.btn0_8.setObjectName("btn0_8")
-        self.btn0_8.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.btn0_9 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn0_9.setGeometry(QtCore.QRect(250, 280, 111, 111))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(26)
-        font.setBold(True)
-        font.setWeight(75)
-        self.btn0_9.setFont(font)
-        self.btn0_9.setText("")
-        self.btn0_9.setObjectName("btn0_9")
-        self.btn0_9.setStyleSheet("border : 1px solid white; background-color : #07BF2F; color: yellow; border-radius : 10px")
-        self.pushButton_11 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_11.setGeometry(QtCore.QRect(100, 410, 81, 31))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.pushButton_11.setFont(font)
-        self.pushButton_11.setObjectName("Reset_btn")
-        self.pushButton_11.setStyleSheet("background-color: #36E303; color: black;")
-        self.pushButton_12 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_12.setGeometry(QtCore.QRect(210, 410, 81, 31))
-        font = QtGui.QFont()
-        font.setFamily("ScoutCond Black")
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.pushButton_12.setFont(font)
-        self.pushButton_12.setObjectName("solve_btn")
-        self.pushButton_12.setStyleSheet("background-color: #36E303; color: black;")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 708, 18))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+display_elements()
+#solve button
+solve_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((375, 100), (90, 30)),
+                                             text='Solve',
+                                             manager=manager,
+                                             object_id="#solve_btn")
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+#algorithm dropdown
+dropdown_layout_rect = pygame.Rect((320, 60), (200, 35))
+algorithmOptions = ["A*","BFS"]
+algorithmDropDown = pygame_gui.elements.UIDropDownMenu(options_list=algorithmOptions,
+                                                       starting_option=algorithmOptions[1],
+                                                       relative_rect=dropdown_layout_rect,
+                                                       manager=manager)
 
-        self.ListButton.append(self.btn0)
-        self.ListButton.append(self.btn0_2)
-        self.ListButton.append(self.btn0_3)
-        self.ListButton.append(self.btn0_4)
-        self.ListButton.append(self.btn0_5)
-        self.ListButton.append(self.btn0_6)
-        self.ListButton.append(self.btn0_7)
-        self.ListButton.append(self.btn0_8)
-        self.ListButton.append(self.btn0_9)
+#shuffle button
+button_layout_rect = pygame.Rect((340, 170), (150, 30))
+shuffle_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+                                             text='Shuffle',
+                                             manager=manager)
 
-        self.pushButton_11.clicked.connect(self.Reset)
-        self.pushButton_12.clicked.connect(self.Solve)
-        self.pushButton_10.clicked.connect(self.New_game)
+def draw_blocks(blocks):
+    for block in blocks:
+        if block['block'] != 0:
+            pygame.draw.rect(window_surface, global_colors.BLUE_GROTTO, block['rect'])
+            textSurf = BASICFONT.render(str(block['block']), True, global_colors.NAVY_BLUE)
+            textRect = textSurf.get_rect()
+            textRect.center = block['rect'].left+50,block['rect'].top+50
+            window_surface.blit(textSurf, textRect)
+        else:
+            pygame.draw.rect(window_surface, global_colors.ROYAL_BLUE, block['rect'])
 
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "8-puzzle Game "))
-        self.btn0.setText(_translate("MainWindow", "1"))
-        self.pushButton_10.setText(_translate("MainWindow", "New Game"))
-        self.btn0_2.setText(_translate("MainWindow", "2"))
-        self.btn0_3.setText(_translate("MainWindow", "3"))
-        self.btn0_4.setText(_translate("MainWindow", "4"))
-        self.btn0_5.setText(_translate("MainWindow", "5"))
-        self.btn0_6.setText(_translate("MainWindow", "6"))
-        self.btn0_7.setText(_translate("MainWindow", "7"))
-        self.btn0_8.setText(_translate("MainWindow", "8"))
-        self.pushButton_11.setText(_translate("MainWindow", "RESET"))
-        self.pushButton_12.setText(_translate("MainWindow", "NEXT"))
+def solveAnimation(moves):
+    for mv in moves:
+        zero = puzzle.matrix.searchBlock(0)
+        if mv == "right":
+            puzzle.matrix.moveright(zero)
+        elif mv == "left":
+            puzzle.matrix.moveleft(zero)
+        elif mv == "up":
+            puzzle.matrix.moveup(zero)
+        elif mv == "down":
+            puzzle.matrix.movedown(zero)
+        puzzle.setBlocksMatrix()
+        draw_blocks(puzzle.blocks)
+        pygame.display.update()
+        time.sleep(0.2)
 
-    def Reset(self):
-        self.state = self.problem.initial
-        self.action = list(self.solution)
-        print(self.solution)
-        for i in range(0,9):
-            if (self.problem.initial[i]!=0):
-                self.ListButton[i].setText(self.problem.initial[i].__str__())
-            else:
-                self.ListButton[i].setText("")
-        if (self.action):
-            self.state = self.problem.Result(self.state,self.action[0])
-            self.action.remove(self.action[0])
+window_surface.blit(background, (0, 0))
+pygame.display.update()
+clock = pygame.time.Clock()
+puzzle = Algo.new(250, 220, 330, 330)
+puzzle.initialize()
+algorithm = "BFS"
+fstate="1,2,3,4,5,6,7,8,0"
+is_running = True
 
-    def Solve(self):
-        for i in range(0,9):
-            if (self.state[i]!=0):
-                self.ListButton[i].setText(self.state[i].__str__())
-            else:
-                self.ListButton[i].setText("")
-        if (self.action):
-            self.state = self.problem.Result(self.state,self.action[0])
-            self.action.remove(self.action[0])
+while is_running:
+    time_delta = clock.tick(60)/1000.0
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            is_running = False
 
-    def New_game(self):
-        shuffled_state = EightPuzzle().shuffle(self.state)
-        problem = EightPuzzle(initial_state=shuffled_state, goal_state=(1, 2, 3, 4, 5, 6, 7, 8, 0))
-        bfs_solve = BFS(problem)
-        self.problem = problem
-        self.solution = tuple(bfs_solve.solution)
-        self.state = problem.initial
-        self.action = list(bfs_solve.solution)
-        self.Reset()
+        if event.type == pygame.USEREVENT:
+            if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == shuffle_button:
+                    puzzle.randomBlocks()
+                elif event.ui_element == solve_button:
 
-if __name__ == "__main__":
-    import sys
-    shuffled_state = EightPuzzle().shuffle([1,2,3,4,5,6,7,8,0])
-    problem = EightPuzzle(initial_state=shuffled_state, goal_state=(1, 2, 3, 4, 5, 6, 7, 8, 0))
-    bfs_solve = BFS(problem)
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow(problem, bfs_solve)
-    ui.setupUi(MainWindow)
-    ui.Reset()
-    MainWindow.show()
-    sys.exit(app.exec_())
+                    if algorithm == "BFS":
+                        moves = puzzle.bfs()
+                        tempo = "{temp: .5f} seconds".format(temp = puzzle.lastSolveTime)
+                        report_msg = '<b>Visited nodes:</b> '+str(puzzle.cost)+'        <b>Time:</b>'+tempo+ '        <b>Resolution:</b> '+str(len(moves))+' steps'
+                        confirmation_win = pygame_gui.windows.ui_confirmation_dialog.UIConfirmationDialog(rect = pygame.Rect((570, 300), (40, 50)),
+                                                                                                manager = manager,
+                                                                                                action_long_desc = report_msg,
+                                                                                                window_title =algorithm.split(" ")[0],
+                                                                                                object_id="#bfs",
+                                                                                                )
+                        solveAnimation(moves)
+
+                    elif algorithm == "A*":
+                        moves = puzzle.a_star()
+                        tempo = "{temp: .5f} seconds".format(temp = puzzle.lastSolveTime)
+                        report_msg = '<b>Visited nodes:</b> '+str(puzzle.cost)+'        <b>Time:</b>'+tempo+ '        <b>Resolution:</b> '+str(len(moves))+' steps'
+                        confirmation_win = pygame_gui.windows.ui_confirmation_dialog.UIConfirmationDialog(rect = pygame.Rect((570, 300), (80, 60)),
+                                                                                                manager = manager,
+                                                                                                action_long_desc = report_msg,
+                                                                                                window_title =algorithm.split(" ")[0],
+                                                                                                )
+                        solveAnimation(moves)
+
+            elif event.user_type == pygame_gui.UI_DROP_DOWN_MENU_CHANGED:
+                if event.ui_element == algorithmDropDown:
+                    algorithm = event.text
+        manager.process_events(event)
+
+    manager.update(time_delta)
+    window_surface.blit(background, (0, 0))
+    manager.draw_ui(window_surface)
+    draw_blocks(puzzle.blocks)
+    pygame.display.update()

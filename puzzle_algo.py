@@ -7,7 +7,7 @@ import numpy as np
 import time
 import global_colors
 
-class Puzzle:
+class Algo:
 
     def __init__(self, x, y, width, height, lastSolveTime, move, cost, matrix,  blocks = [], final_state = "1,2,3,4,5,6,7,8,0"):
         self.x = x
@@ -23,7 +23,7 @@ class Puzzle:
 
     @staticmethod
     def new(x, y, width, height):
-        return Puzzle(x, y, width, height, 0, [], 0, Matrix(3,3), [])
+        return Algo(x, y, width, height, 0, [], 0, Matrix(3,3), [])
 
     def validNumbers(self, numbers):
         valid = False
@@ -65,7 +65,7 @@ class Puzzle:
         i=0
         for k in range(3):
             for j in range(3):
-                blocks.append({'rect':pygame.Rect(block_x, block_y, block_w, block_h),'color':colors.WHITE,'block':m[k][j]})
+                blocks.append({'rect':pygame.Rect(block_x, block_y, block_w, block_h),'color':global_colors.WHITE,'block':m[k][j]})
                 block_x += block_w+1
                 i+=1
             block_y += block_h+1
@@ -85,7 +85,7 @@ class Puzzle:
             i=0
             for k in range(3):
                 for j in range(3):
-                    blocks.append({'rect':pygame.Rect(block_x, block_y, block_w, block_h),'color':colors.WHITE,'block':int(numbers[i])})
+                    blocks.append({'rect':pygame.Rect(block_x, block_y, block_w, block_h),'color':global_colors.WHITE,'block':int(numbers[i])})
                     block_x += block_w+1 #right
                     i+=1
                 block_y += block_h+1 #down
