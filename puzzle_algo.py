@@ -1,4 +1,5 @@
 from random import randint
+from matrix import Matrix
 from queue import PriorityQueue, Queue
 import random
 import pygame
