@@ -5,6 +5,7 @@ import random
 import pygame
 import numpy as np
 import time
+import global_colors
 
 class Puzzle:
 
