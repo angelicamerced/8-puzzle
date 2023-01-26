@@ -62,7 +62,7 @@ class Algo:
         block_w = self.width/3
         block_h = self.height/3
 
-        m = self.matrix.getMatrix() # kani ang need as output for bfs()
+        m = self.matrix.getMatrix()
         i=0
         for k in range(3):
             for j in range(3):
@@ -184,6 +184,8 @@ class Algo:
 
         end_time = time.time()
         self.lastSolveTime = end_time-start_time
+        print('Finding solution')
+        print(moves[::-1])
         return moves[::-1]
 
 class Puzzle:

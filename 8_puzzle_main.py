@@ -10,36 +10,34 @@ BASICFONT = pygame.font.Font('Roboto-Medium.ttf',50)
 pygame.display.set_caption('8 Puzzle Game')
 window_surface = pygame.display.set_mode(SCREEN_SIZE)
 background = pygame.Surface(SCREEN_SIZE)
-background.fill(pygame.Color(global_colors.WHITE))
+background.fill(pygame.Color(global_colors.BABY_BLUE))
 manager = pygame_gui.UIManager(SCREEN_SIZE, 'theme.json')
 pygame_gui.core.IWindowInterface.set_display_title(self=window_surface,new_title="8-Puzzle")
 
-
-
-#solve button
-solve_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((375, 100), (90, 30)),
-                                             text='Solve',
-                                             manager=manager,
-                                             object_id="#solve_btn")
+#shuffle button
+button_layout_rect = pygame.Rect((340, 40), (150, 30))
+shuffle_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
+                                             text='Shuffle',
+                                             manager=manager)
 
 #algorithm dropdown
-dropdown_layout_rect = pygame.Rect((320, 60), (200, 35))
-algorithmOptions = ["A*","BFS"]
+dropdown_layout_rect = pygame.Rect((290, 100), (270, 40))
+algorithmOptions = ["A* Algorithm","Breadth-First Search Algorithm"]
 algorithmDropDown = pygame_gui.elements.UIDropDownMenu(options_list=algorithmOptions,
                                                        starting_option=algorithmOptions[1],
                                                        relative_rect=dropdown_layout_rect,
                                                        manager=manager)
 
-#shuffle button
-button_layout_rect = pygame.Rect((340, 170), (150, 30))
-shuffle_button = pygame_gui.elements.UIButton(relative_rect=button_layout_rect,
-                                             text='Shuffle',
-                                             manager=manager)
+#solve button
+solve_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((320, 160), (200, 40)),
+                                             text='Solve',
+                                             manager=manager,
+                                             object_id="#solve_btn")
 
 def draw_blocks(blocks):
     for block in blocks:
         if block['block'] != 0:
-            pygame.draw.rect(window_surface, global_colors.BLUE_GROTTO, block['rect'])
+            pygame.draw.rect(window_surface, global_colors.BLUE_GREEN, block['rect'])
             textSurf = BASICFONT.render(str(block['block']), True, global_colors.NAVY_BLUE)
             textRect = textSurf.get_rect()
             textRect.center = block['rect'].left+50,block['rect'].top+50
@@ -68,7 +66,7 @@ pygame.display.update()
 clock = pygame.time.Clock()
 puzzle = Algo.new(250, 220, 330, 330)
 puzzle.initialize()
-algorithm = "BFS"
+algorithm = "Breadth-First Search Algorithm"
 fstate="1,2,3,4,5,6,7,8,0"
 is_running = True
 show_confirmaton = False
@@ -86,7 +84,7 @@ while is_running:
                 if event.ui_element == shuffle_button:
                     random_blocks = puzzle.randomBlocks()
                 elif event.ui_element == solve_button:
-                    if algorithm == "BFS":
+                    if algorithm == "Breadth-First Search Algorithm":
                         try:
                             comp_time, moves = puzzle.bfs(random_blocks)
                             print('Solution found!')
@@ -101,7 +99,7 @@ while is_running:
                                                                                                 )
                         solveAnimation(moves)
 
-                    elif algorithm == "A*":
+                    elif algorithm == "A* Algorithm":
                         moves = puzzle.a_star()
                         tempo = "{temp: .3f} seconds".format(temp = puzzle.lastSolveTime)
                         info = '<b>Visited nodes:</b> '+str(puzzle.cost)+'\n<b>Time:</b>'+tempo+ '\n<b>No. of Steps:</b> '+str(len(moves))

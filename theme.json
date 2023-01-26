@@ -5,13 +5,13 @@
 
        "colours":
        {
-          "normal_bg": "#0074B7",
+          "normal_bg": "#189AB4",
           "hovered_bg": "#60A3D9",
-          "disabled_bg": "#0074B7",
-          "selected_bg": "#0074B7",
+          "disabled_bg": "#189AB4",
+          "selected_bg": "#189AB4",
           "active_bg": "#193784",
           "normal_text": "#FFFFFF",
-          "hovered_text": "#BFD7ED",
+          "hovered_text": "#D4F1F4",
           "selected_text": "#FFFFFF",
           "disabled_text": "#6d736f",
           "active_text": "#FFFFFF",
@@ -38,8 +38,8 @@
     {
        "colours":
        {
-          "dark_bg":"#BFD7ED",
-          "normal_bg":"#BFD7ED",
+          "dark_bg":"#D4F1F4",
+          "normal_bg":"#D4F1F4",
           "normal_text": "#003B73"
        },
        "font":
@@ -56,8 +56,8 @@
  
        "colours":
        {
-          "normal_bg": "#BFD7ED",
-          "selected_bg": "#0074B7",
+          "normal_bg": "#D4F1F4",
+          "selected_bg": "#189AB4",
           "normal_text": "#55595e",
           "selected_text": "#FFFFFF",
           "normal_border": "#FFFFFF"
@@ -73,8 +73,8 @@
     {
        "colours":
        {
-          "normal_bg": "#BFD7ED",
-          "selected_bg": "#0074B7",
+          "normal_bg": "#D4F1F4",
+          "selected_bg": "#189AB4",
           "normal_text": "#003B73",
           "selected_text": "#FFFFFF",
           "normal_border": "#FFFFFF"
@@ -88,17 +88,17 @@
     {
        "colours":
        {
-          "normal_bg": "#BFD7ED",
-          "dark_bg": "#BFD7ED",
-          "selected_bg": "#0074B7"
+          "normal_bg": "#D4F1F4",
+          "dark_bg": "#D4F1F4",
+          "selected_bg": "#189AB4"
        }
     },
     "text_entry_line":
     {
        "colours":
        {
-          "dark_bg": "#BFD7ED",
-          "selected_bg": "#0074B7",
+          "dark_bg": "#D4F1F4",
+          "selected_bg": "#189AB4",
           "normal_text": "#003B73",
           "selected_text": "#FFFFFF",
           "normal_border": "#FFFFFF"
@@ -124,7 +124,7 @@
        "font":
        {
           "name": "Roboto",
-          "size": "10",
+          "size": "8",
           "bold": "1",
           "italic": "0"
        }
@@ -162,8 +162,8 @@
        },
        "colours":
        {
-          "dark_bg": "#BFD7ED",
-          "selected_bg": "#BFD7ED",
+          "dark_bg": "#D4F1F4",
+          "selected_bg": "#D4F1F4",
           "normal_text": "#8C0BE5",
           "selected_text": "#FFFFFF",
           "normal_border": "#FFFFFF"
